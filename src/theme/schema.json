@@ -1,0 +1,24 @@
+{
+  "data" : {
+    "light" : {
+      "id": "T_001",
+      "name": "Light",
+      "colors": {
+        "primary": "#FFFFFF",
+        "secondary": "#000000",
+        "tertiary": "#525253",
+        "quaternary": "#F3F3F4"
+      }
+    },
+    "dark" : {
+      "id": "T_002",
+      "name": "Dark",
+      "colors": {
+        "primary": "#000000",
+        "secondary": "#FFFFFF",
+        "tertiary": "#000000",
+        "quaternary": "#2F2F2F"
+      }
+    }
+  }
+}

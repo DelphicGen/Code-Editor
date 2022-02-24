@@ -4,9 +4,18 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import store from './app/store';
+import { Provider } from 'react-redux';
+import * as themes from './theme/schema.json';
+import { setToLocalStorage } from './utils/storage';
+
+setToLocalStorage('all-themes', themes.default);
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={ store }>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
