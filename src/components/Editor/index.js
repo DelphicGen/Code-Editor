@@ -1,15 +1,18 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import styled from 'styled-components'
 
 const EditorContainer = styled.div`
   flex: 1;
   width: 100%;
+  height: 100%;
+  position: absolute;
 `;
 
 const EditorHeader = styled.h2`
   background-color: ${prop => prop.theme.colors.primary};
   color: ${prop => prop.theme.colors.secondary};
   padding: 8px;
+  cursor: move;
 `;
 
 const EditorTextarea = styled.textarea`
@@ -28,6 +31,7 @@ const EditorTextarea = styled.textarea`
 `;
 
 const Editor = (props) => {
+  const headerRef = useRef(null);
   const textareaRef = useRef(null);
   const handleTabKey = e => {
     if (e.key === 'Tab' && !e.shiftKey) {
@@ -74,8 +78,8 @@ const Editor = (props) => {
   }
 
   return (
-    <EditorContainer>
-      <EditorHeader>{ props.header }</EditorHeader>
+    <EditorContainer style={{ top: props.top }}>
+      <EditorHeader ref={headerRef} onMouseDown={e => props.handleOnMouseDown(e, props.name)}>{ props.header }</EditorHeader>
       <EditorTextarea ref={textareaRef} onKeyDown={handleTabKey} name={props.name} value={props.value} onChange={props.onChangeHandler} />
     </EditorContainer>
   )
