@@ -9,8 +9,8 @@ const ToggleSwitchContainer = styled.label`
   border-radius: 34px;
   position: relative;
   display: inline-block;
-  width: 52px;
-  height: 24px;
+  width: 57.97px;
+  height: 29.97px;
 `;
 
 const ToggleSwitchSlider = styled.div`
