@@ -40,14 +40,8 @@ const Space = () => {
     js: ''
   });
   const [editorPos, setEditorPos] = useState({
-    css: {
-      top: headerHeight,
-      minTop: headerHeight
-    },
-    js: {
-      top: headerHeight * 2,
-      minTop: headerHeight * 2
-    }
+    css: headerHeight,
+    js: headerHeight * 2
   })
   const editorContainerRef = useRef(null)
   const editorSectionRef = useRef(null);
@@ -91,19 +85,14 @@ const Space = () => {
       if(key === 'css') {
         setEditorPos(prevState => ({
           ...prevState,
-          [key]: {
-            ...prevState[key],
-            top: Math.max(prevState[key].minTop, prevState[key].top + dy)
-          }
+          [key]: Math.max(headerHeight, prevState[key] + dy)
         }));
       }
       else {
         setEditorPos(prevState => ({
           ...prevState,
-          [key]: {
-            ...prevState[key],
-            top: Math.max(prevState.css.top + headerHeight, prevState[key].top + dy)
-          }
+          [key]: Math.max(headerHeight * 2, prevState[key] + dy),
+          css: prevState.js <= prevState.css + headerHeight ? Math.max(headerHeight, prevState.css + dy) : prevState.css
         }));
       }
     }
@@ -111,19 +100,14 @@ const Space = () => {
       if(key === 'css') {
         setEditorPos(prevState => ({
           ...prevState,
-          [key]: {
-            ...prevState[key],
-            top: Math.min(prevState.js.top - headerHeight, prevState[key].top + dy)
-          }
+          [key]: Math.min(editorContainerRef.current.clientHeight - 2 * headerHeight, prevState[key] + dy),
+          js: prevState.css + headerHeight >= prevState.js ? Math.min(editorContainerRef.current.clientHeight - headerHeight, prevState.js + dy) : prevState.js
         }));
       }
       else {
         setEditorPos(prevState => ({
           ...prevState,
-          [key]: {
-            ...prevState[key],
-            top: Math.min(editorContainerRef.current.clientHeight - headerHeight, prevState[key].top + dy)
-          }
+          [key]: Math.min(editorContainerRef.current.clientHeight - headerHeight, prevState[key] + dy)
         }));
       }
     }
@@ -162,7 +146,7 @@ const Space = () => {
           name="css"
           value={code.css}
           onChangeHandler={updateCode}
-          top={editorPos.css.top}
+          top={editorPos.css}
           handleOnMouseDown={checkDraggableEditor}
         />
 
@@ -171,7 +155,7 @@ const Space = () => {
           name="js"
           value={code.js}
           onChangeHandler={updateCode}
-          top={editorPos.js.top}
+          top={editorPos.js}
           handleOnMouseDown={checkDraggableEditor}
         />
       </EditorSection>
